@@ -10,14 +10,14 @@ jobs:
             - name: checkout code
               uses: actions/checkout@v4
             - name: echo the file
-              run: echo "let's get started learning Github Actions" >> message_from_learner.txt
+              run: echo "let's get started learning Github Actions" >> ${{ env.FILE_NAME}}
             - name: listing the files
               run: ls -l
             - name: upload artifacts
               uses: actions/upload-artifact@v4
               with:
                 name: my-artifact
-                path: message_from_learner.txt
+                path: ${{ env.FILE_NAME}}
 
             
     reading-files:
