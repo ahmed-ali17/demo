@@ -1,0 +1,35 @@
+name: kk workflow 1
+on: 
+    push:
+        branches:
+            - main
+jobs:
+    files-creation-job:
+        runs-on: ubuntu-latest
+        steps:
+            - name: checkout code
+              uses: actions/checkout@v4
+            - name: echo the file
+              run: echo "let's get started learning Github Actions" >> message_from_learner.txt
+            - name: listing the files
+              run: ls -l
+    uploading-artifacts:
+        runs-on: ubuntu-latest
+        needs: files-creation-job
+        steps:
+            - name: upload artifacts
+              uses: actions/upload-artifact@v4
+              with:
+                name: my-artifact
+                path: /
+    reading-files:
+        runs-on: ubuntu-latest
+        needs: uploading-artifacts
+        steps:
+          - name: download artifacts
+            uses: actions/download-artifacts@v4
+            with:
+                name: my-artifact
+          - name: listing files
+            run: ls -l
+
